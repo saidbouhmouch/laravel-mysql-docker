@@ -1,0 +1,13 @@
+**/*~
+**/*.log
+**/.DS_Store
+**/Thumbs.db
+
+node_modules
+vendor
+Dockerfile
+composer.lock
+package-lock.json
+start.sh
+shutdown.sh
+docker-compose.yml

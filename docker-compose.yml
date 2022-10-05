@@ -1,0 +1,41 @@
+version: '3'
+services:
+  server:
+    container_name: laravel-app-server
+    restart: always
+    tty: true
+    build: 
+      context: .
+      target: development
+    ports:
+      - 8003:80
+    volumes:
+      - ./:/var/www/app
+    command: "php artisan serve --port=80 --host=0.0.0.0"
+    depends_on:
+      - db_mysql
+
+  db_mysql:
+    image: mysql:5.7
+    container_name: laravel-app-mysql-db
+    restart: always
+    #command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports: 
+      - 3307:3306
+    volumes:
+      - mysql_db_volumes:/var/run/mysqld
+      - mysql_lib_db_volumes:/var/lib/mysql
+
+networks:
+  net:
+    driver: bridge
+
+volumes:
+  laravel_app_volumes:   
+  mysql_db_volumes: 
+  mysql_lib_db_volumes: 
